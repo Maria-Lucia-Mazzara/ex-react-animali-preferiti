@@ -1,14 +1,13 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>I miei animali Preferiti</title>
     <link rel="stylesheet" href="style.css">
-
     <!-- collegamenti react -->
-    <script src="https://unpkg.com/react@18/umd/react.development. js"></script>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <!-- collegamento per la dom -->
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <!-- collegamento babel -->
@@ -16,20 +15,82 @@
 
     <!-- montaggio della dom -->
     <script type="text/babel">
+
+        const { useState } = React;
+
+        function Modal({
+            title,
+            content,
+            show = false,
+            onClose = () => { },
+            onConfirm = () => { }
+
+        }) {
+            return show && ReactDOM.createPortal(
+                <div className="modal-container">
+                    <div className="modal">
+                        <h2>{title}</h2>
+                        {content}
+                        <div>
+                            <button onClick={onClose}>Annulla</button>
+                            <button onClick={onConfirm}>Conferma</button>
+                        </div>
+                    </div>
+                </div>,
+                document.body
+            )
+        }
+
+
         const ListaAnimali = () => {
 
-            const animali = ['pecora', 'cigno', 'coniglio'];
+            const animalsChoices = ['pecora', 'cigno', 'coniglio'];
+
+            const [animal, setAnimal] = useState([])
+
+            const [show, setShow] = useState(false)
+
+            const [animaleAgg, setAnimaleAgg] = useState([''])
+
+            const addAnimal = () => {
+                if (!animaleAgg) return;
+                setAnimal(curr => [...curr, animaleAgg])
+                setAnimaleAgg('')
+                setShow(false)
+            }
+
+            const aggiungiAnimale = () => {
+                // const numeroRandom = Math.floor(Math.random() * animalsChoices.length);
+                // const animaleRandom = animalsChoices[numeroRandom];
+                // setAnimal(curr => [...curr, animaleRandom]);
+
+            }
 
             return (
-                <details>
-                    <summary>Animali</summary>
-                    <ul>
-                        {animali.map((a, i) => (
-                            <li key={i}>{animali}</li>
+                <>
+                    <button onClick={() => setShow(true)}> aggiungi un animale</button>
+                    <details>
+                        <summary>Animali</summary>
+                        <ul>
+                            {animal.map((a, i) => (
+                                <li key={i}>{a}</li>
 
-                        ))}
-                    </ul>
-                </details>
+                            ))}
+                        </ul>
+                    </details>
+                    <Modal
+                        show={show}
+                        onClose={() => setShow(false)}
+                        onConfirm={addAnimal}
+                        title='aggiungi animale'
+                        content={
+                            <input type='text'
+                                value={animaleAgg}
+                                onChange={e => setAnimaleAgg(e.target.value)}
+                            />
+                        }
+                    />
+                </>
             )
         }
     </script>
@@ -37,8 +98,8 @@
     <!-- root e render -->
     <script type="text/babel">
         const { createRoot } = ReactDOM;
-        const elementoHtml = document.querySelector('.lista-animali')
-        const root = createRoot(elementoHtml)
+        const elementoHtml = document.querySelector('.lista-animali');
+        const root = createRoot(elementoHtml);
         root.render(<ListaAnimali />)
     </script>
 </head>
