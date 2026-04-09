@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>I miei animali Preferiti</title>
     <link rel="stylesheet" href="style.css">
+
     <!-- collegamenti react -->
-    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react@18/umd/react.development. js"></script>
     <!-- collegamento per la dom -->
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <!-- collegamento babel -->
@@ -16,24 +17,28 @@
     <!-- montaggio della dom -->
     <script type="text/babel">
         const ListaAnimali = () => {
-            const animals = ['pecora', 'cigno', 'coniglio']
+
+            const animali = ['pecora', 'cigno', 'coniglio'];
+
             return (
                 <details>
-                    <summary>animali</summary>
+                    <summary>Animali</summary>
                     <ul>
-                        {animals.map((animal, i) => {
-                            <li key={i}>{animal}
-                            </li>
-                        })}
+                        {animali.map((a, i) => (
+                            <li key={i}>{animali}</li>
+
+                        ))}
                     </ul>
                 </details>
             )
         }
     </script>
+
+    <!-- root e render -->
     <script type="text/babel">
         const { createRoot } = ReactDOM;
-        const lista = document.queryselector('.lista-animali');
-        const root = createRoot(lista);
+        const elementoHtml = document.querySelector('.lista-animali')
+        const root = createRoot(elementoHtml)
         root.render(<ListaAnimali />)
     </script>
 </head>
