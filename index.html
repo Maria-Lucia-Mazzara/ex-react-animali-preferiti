@@ -15,7 +15,26 @@
 
     <!-- montaggio della dom -->
     <script type="text/babel">
-
+        const ListaAnimali = () => {
+            const animals = ['pecora', 'cigno', 'coniglio']
+            return (
+                <details>
+                    <summary>animali</summary>
+                    <ul>
+                        {animals.map((animal, i) => {
+                            <li key={i}>{animal}
+                            </li>
+                        })}
+                    </ul>
+                </details>
+            )
+        }
+    </script>
+    <script type="text/babel">
+        const { createRoot } = ReactDOM;
+        const lista = document.queryselector('.lista-animali');
+        const root = createRoot(lista);
+        root.render(<ListaAnimali />)
     </script>
 </head>
 
